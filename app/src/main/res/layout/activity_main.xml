@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.deity.flymessage.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/beach_bg">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_fishing"
+            android:layout_width="100.0dip"
+            android:layout_height="100.0dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="160.0dip"
+            android:contentDescription="@null"
+            android:src="@drawable/beach_fishingrod_move" />
+
+        <ImageView
+            android:id="@+id/beach_lang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="110.0dip"
+            android:contentDescription="@null"
+            android:src="@drawable/beach_lang" />
+
+        <ImageView
+            android:id="@+id/beach_shui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="110.0dip"
+            android:contentDescription="@null"
+            android:src="@drawable/beach_shui" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80.0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="30.0dip"
+            android:layout_marginRight="30.0dip"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/item_bottle_send"
+                layout="@layout/item_icon_send"
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:layout_weight="1.0" />
+
+            <include
+                android:id="@+id/item_bottle_get"
+                layout="@layout/item_icon_get"
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:layout_weight="1.0" />
+
+            <include
+                android:id="@+id/item_bottle_msg"
+                layout="@layout/item_icon_msg"
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:layout_weight="1.0" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/bottle_sending"
+            android:layout_width="60.0dip"
+            android:layout_height="60.0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100.0dip"
+            android:contentDescription="@null"
+            android:src="@drawable/bottle_v" />
+
+        <ImageView
+            android:id="@+id/bottle_getting"
+            android:layout_width="100.0dip"
+            android:layout_height="100.0dip"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100.0dip"
+            android:contentDescription="@null"
+            android:src="@drawable/beach_fishingrod"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

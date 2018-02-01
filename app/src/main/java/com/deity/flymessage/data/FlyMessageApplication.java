@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.mob.MobSDK;
+
 import cn.jpush.im.android.api.JMessageClient;
 
 /**
@@ -33,6 +35,8 @@ public class FlyMessageApplication extends Application {
         Log.i("IMDebugApplication", "init");
         JMessageClient.setDebugMode(true);
         JMessageClient.init(getApplicationContext(), true);
+
+        MobSDK.init(this);//短信验证码
     }
 
     /**

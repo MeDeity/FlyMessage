@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
     @BindView(R.id.beach_lang)
     public ImageView beach_lang;
 
+    @BindView(R.id.personal_setting)
+    public ImageView personal_setting;
+
     @BindView(R.id.bottle_getting)
     public ImageView bottle_getting;
 
@@ -48,10 +51,18 @@ public class MainActivity extends Activity {
     }
 
     @SuppressWarnings("unused")
-    @OnClick(R.id.send_nav_image)
+    @OnClick({R.id.send_nav_image,R.id.personal_setting})
     public void sendBottleMsg(View view){
-        new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_send)
-                .show();
+        switch (view.getId()){
+            case R.id.personal_setting:
+                startActivity(new Intent(MainActivity.this,SettingActivity.class));
+                break;
+            case R.id.send_nav_image:
+                new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_send)
+                        .show();
+                break;
+        }
+
 //        bottle_sending.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up));
     }
 
@@ -67,6 +78,7 @@ public class MainActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.item_bottle_msg)
     public void getBottle(View view){
-        startActivity(new Intent(MainActivity.this,ChatActivity.class));
+        startActivity(new Intent(MainActivity.this,ConvertionActivity.class));
+//        startActivity(new Intent(MainActivity.this,ChatActivity.class));
     }
 }

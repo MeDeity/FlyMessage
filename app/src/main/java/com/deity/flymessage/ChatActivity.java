@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +39,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.enums.ConversationType;
+import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
+import cn.jpush.im.android.api.model.UserInfo;
 
 /**
  * 聊天界面
@@ -72,12 +79,21 @@ public class ChatActivity extends AppCompatActivity {
 
     private ChatAdapter chatAdapter;
     private LinearLayoutManager layoutManager;
-    private List<MessageInfo> messageInfos;
+    private List<MessageInfo> messageInfos = new ArrayList<>();
     //录音相关
     int animationRes = 0;
     int res = 0;
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
+
+    //----------------
+    public static final int PAGE_MESSAGE_COUNT = 18;
+    private int mOffset = PAGE_MESSAGE_COUNT;
+    private String mTargetId = "hellod";//mTargetId = getIntent().getStringExtra("targetId");
+    private UserInfo mMyInfo;
+    private Conversation mConv;//会话
+    private final static String TAG = "ChatActivity";
+    private List<Message> mMsgList = new ArrayList<>();
 
 
     @Override
@@ -87,7 +103,19 @@ public class ChatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initWidget();
+
+        JMessageClient.registerEventReceiver(this);
+        mMyInfo = JMessageClient.getMyInfo();
+        mConv = JMessageClient.getSingleConversation(mTargetId);
+        if (mConv == null) {
+            Log.i(TAG, "create new conversation");
+            mConv = Conversation.createSingleConversation(mTargetId);
+        }
+
+        LoadData();
     }
+
+
 
     private void initWidget() {
         fragments = new ArrayList<>();
@@ -143,7 +171,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
         chatAdapter.addItemClickListener(itemClickListener);
-        LoadData();
     }
 
     /**
@@ -199,12 +226,20 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
 
+    private void loadHistory(){
+        this.mMsgList = mConv.getMessagesFromNewest(0, mOffset);
+        if (mMsgList.size() > 0) {
+            for (Message message : mMsgList) {
+                System.out.print("ChatActivity:"+message.toString());
+                MessageInfo messageInfo = new MessageInfo(message);
+                messageInfos.add(messageInfo);
+            }
+        }
+    }
     /**
      * 构造聊天数据
      */
     private void LoadData() {
-        messageInfos = new ArrayList<>();
-
         MessageInfo messageInfo = new MessageInfo();
         messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
@@ -231,7 +266,7 @@ public class ChatActivity extends AppCompatActivity {
         messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
         messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         messageInfos.add(messageInfo3);
-
+        loadHistory();
         chatAdapter.addAll(messageInfos);
     }
 
@@ -274,5 +309,35 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
+    }
+
+
+    /**
+     * 接收消息类事件 非UI线程上执行
+     * @param event 消息事件
+     */
+    @SuppressWarnings("unused")
+    public void onEvent(MessageEvent event) {
+        final Message msg = event.getMessage();
+        //刷新消息
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //收到消息的类型为单聊
+                if (msg.getTargetType() == ConversationType.single) {//暂时不考虑群聊
+                    UserInfo userInfo = (UserInfo) msg.getTargetInfo();
+                    String targetId = userInfo.getUserName();
+                    String appKey = userInfo.getAppKey();
+                    //判断消息是否在当前会话中
+                    if (targetId.equals(mTargetId)) {
+                        Log.i(TAG, "Receiving msg! " + msg);
+                        MessageInfo message = new MessageInfo(msg);
+                        messageInfos.add(message);
+                        chatAdapter.add(message);
+                        chatList.scrollToPosition(chatAdapter.getCount() - 1);
+                    }
+                }
+            }
+        });
     }
 }

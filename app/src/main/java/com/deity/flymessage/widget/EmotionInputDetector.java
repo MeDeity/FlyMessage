@@ -189,9 +189,9 @@ public class EmotionInputDetector {
             public void onClick(View v) {
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.GONE);
-                MessageInfo messageInfo = new MessageInfo();
-                messageInfo.setContent(mEditText.getText().toString());
-                EventBus.getDefault().post(messageInfo);
+//                MessageInfo messageInfo = new MessageInfo();
+//                messageInfo.setContent(mEditText.getText().toString());
+//                EventBus.getDefault().post(messageInfo);
                 mEditText.setText("");
             }
         });

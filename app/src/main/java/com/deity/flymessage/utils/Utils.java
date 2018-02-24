@@ -9,6 +9,9 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +21,16 @@ import java.util.regex.Pattern;
  * 邮箱：rance935@163.com
  */
 public class Utils {
+
+    private static Gson gsonUtil;
+
+    static {
+        gsonUtil = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().serializeNulls().create();
+    }
+
+    public static Gson obtainGsonUtils(){
+        return gsonUtil;
+    }
     /**
      * dp转dip
      *

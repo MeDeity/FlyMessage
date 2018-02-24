@@ -89,7 +89,7 @@ public class ChatActivity extends AppCompatActivity {
     //----------------
     public static final int PAGE_MESSAGE_COUNT = 18;
     private int mOffset = PAGE_MESSAGE_COUNT;
-    private String mTargetId = "hellod";//mTargetId = getIntent().getStringExtra("targetId");
+    private String mTargetId;
     private UserInfo mMyInfo;
     private Conversation mConv;//会话
     private final static String TAG = "ChatActivity";
@@ -105,6 +105,7 @@ public class ChatActivity extends AppCompatActivity {
         initWidget();
 
         JMessageClient.registerEventReceiver(this);
+        mTargetId = getIntent().getStringExtra("targetId");
         mMyInfo = JMessageClient.getMyInfo();
         mConv = JMessageClient.getSingleConversation(mTargetId);
         if (mConv == null) {
@@ -227,7 +228,7 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     private void loadHistory(){
-        this.mMsgList = mConv.getMessagesFromNewest(0, mOffset);
+        this.mMsgList = mConv.getMessagesFromNewest(1, mOffset);
         if (mMsgList.size() > 0) {
             for (Message message : mMsgList) {
                 System.out.print("ChatActivity:"+message.toString());
@@ -240,32 +241,32 @@ public class ChatActivity extends AppCompatActivity {
      * 构造聊天数据
      */
     private void LoadData() {
-        MessageInfo messageInfo = new MessageInfo();
-        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
-        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-        messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-        messageInfos.add(messageInfo);
-
-        MessageInfo messageInfo1 = new MessageInfo();
-        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-        messageInfo1.setVoiceTime(3000);
-        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo1);
-
-        MessageInfo messageInfo2 = new MessageInfo();
-        messageInfo2.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-        messageInfo2.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-        messageInfos.add(messageInfo2);
-
-        MessageInfo messageInfo3 = new MessageInfo();
-        messageInfo3.setContent("[微笑][色][色][色]");
-        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-        messageInfos.add(messageInfo3);
+//        MessageInfo messageInfo = new MessageInfo();
+//        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
+//        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//        messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
+//        messageInfos.add(messageInfo);
+//
+//        MessageInfo messageInfo1 = new MessageInfo();
+//        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
+//        messageInfo1.setVoiceTime(3000);
+//        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+//        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
+//        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+//        messageInfos.add(messageInfo1);
+//
+//        MessageInfo messageInfo2 = new MessageInfo();
+//        messageInfo2.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
+//        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//        messageInfo2.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
+//        messageInfos.add(messageInfo2);
+//
+//        MessageInfo messageInfo3 = new MessageInfo();
+//        messageInfo3.setContent("[微笑][色][色][色]");
+//        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
+//        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
+//        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
+//        messageInfos.add(messageInfo3);
         loadHistory();
         chatAdapter.addAll(messageInfos);
     }

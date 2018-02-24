@@ -78,7 +78,7 @@ public class MainActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.item_bottle_msg)
     public void getBottle(View view){
-//        startActivity(new Intent(MainActivity.this,ConvertionActivity.class));
-        startActivity(new Intent(MainActivity.this,ChatActivity.class));
+        startActivity(new Intent(MainActivity.this,ConvertionActivity.class));
+//        startActivity(new Intent(MainActivity.this,ChatActivity.class));
     }
 }

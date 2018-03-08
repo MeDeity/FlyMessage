@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.deity.flymessage.adapter.ChatAdapter;
 import com.deity.flymessage.adapter.CommonFragmentPagerAdapter;
+import com.deity.flymessage.dao.MessageDaoImpl;
 import com.deity.flymessage.entity.MessageInfo;
 import com.deity.flymessage.fragment.ChatEmotionFragment;
 import com.deity.flymessage.fragment.ChatFunctionFragment;
@@ -50,6 +51,7 @@ import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import io.realm.RealmResults;
 
 /**
  * 聊天界面
@@ -233,46 +235,16 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     private void loadHistory(){
-        this.mMsgList = mConv.getMessagesFromNewest(1, mOffset);
-        if (mMsgList.size() > 0) {
-            for (Message message : mMsgList) {
-                System.out.print("ChatActivity:"+message.toString());
-                MessageInfo messageInfo = new MessageInfo(message,0,"","",0);
-                messageInfos.add(messageInfo);
-            }
+        RealmResults<MessageInfo> messageResults = MessageDaoImpl.getInstance().queryMessage(mTargetId);
+        for (MessageInfo message:messageResults){
+            messageInfos.add(message);
         }
     }
     /**
      * 构造聊天数据
      */
     private void LoadData() {
-//        MessageInfo messageInfo = new MessageInfo();
-//        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
-//        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//        messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-//        messageInfos.add(messageInfo);
-//
-//        MessageInfo messageInfo1 = new MessageInfo();
-//        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-//        messageInfo1.setVoiceTime(3000);
-//        messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-//        messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-//        messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-//        messageInfos.add(messageInfo1);
-//
-//        MessageInfo messageInfo2 = new MessageInfo();
-//        messageInfo2.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-//        messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//        messageInfo2.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-//        messageInfos.add(messageInfo2);
-//
-//        MessageInfo messageInfo3 = new MessageInfo();
-//        messageInfo3.setContent("[微笑][色][色][色]");
-//        messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-//        messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-//        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-//        messageInfos.add(messageInfo3);
-//        loadHistory();
+        loadHistory();
         chatAdapter.addAll(messageInfos);
     }
 
@@ -288,6 +260,7 @@ public class ChatActivity extends AppCompatActivity {
                 Log.i("ChatActivity:",s);
             }
         });
+        MessageDaoImpl.getInstance().saveNewMessage(messageInfo);
         messageInfos.add(messageInfo);
         chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
@@ -321,6 +294,7 @@ public class ChatActivity extends AppCompatActivity {
                 String targetId = userInfo.getUserName();
                 if (targetId.equals(mTargetId)) {//判断消息是否在当前会话中
                     MessageInfo message = new MessageInfo(msg,code,imageUrl, mFilePath, voiceTime);
+                    MessageDaoImpl.getInstance().saveNewMessage(message);
                     messageInfos.add(message);
                     chatAdapter.add(message);
                     chatList.scrollToPosition(chatAdapter.getCount() - 1);

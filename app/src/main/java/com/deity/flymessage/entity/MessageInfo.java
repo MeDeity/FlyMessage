@@ -2,17 +2,22 @@ package com.deity.flymessage.entity;
 
 import com.deity.flymessage.utils.Constants;
 
-import cn.jpush.im.android.api.content.MediaContent;
+import java.util.UUID;
+
 import cn.jpush.im.android.api.content.TextContent;
-import cn.jpush.im.android.api.enums.ContentType;
 import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.model.Message;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * 作者：Rance on 2016/12/14 14:13
  * 邮箱：rance935@163.com
  */
-public class MessageInfo {
+public class MessageInfo extends RealmObject{
+    @PrimaryKey
+    private String id;//主键
+    private String targetUserName;
     private int type;
     private String content;
     private String filepath;
@@ -23,14 +28,12 @@ public class MessageInfo {
     private long voiceTime;
     private String msgId;
 
-    //扩展
-    private Message message;
-    private String mediaFilePath;
-    private String progress;
 
     public MessageInfo(){}
 
     public MessageInfo(Message message,int code,String imageUrl,String filepath,long voiceTime){
+        this.id = UUID.randomUUID().toString();
+        this.targetUserName = message.getTargetID();
         if (message.getDirect().equals(MessageDirect.receive)){
             this.type = Constants.CHAT_ITEM_TYPE_LEFT;
         }else {
@@ -48,13 +51,6 @@ public class MessageInfo {
                 this.filepath = filepath;
                 this.voiceTime = voiceTime;
                 break;
-        }
-
-        this.message = message;
-        ContentType contentType = message.getContentType();
-        if (contentType == ContentType.voice || contentType == ContentType.image
-                || contentType == ContentType.video || contentType == ContentType.file) {
-            mediaFilePath = ((MediaContent) message.getContent()).getLocalPath();
         }
     }
 
@@ -128,6 +124,22 @@ public class MessageInfo {
 
     public void setMsgId(String msgId) {
         this.msgId = msgId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTargetUserName() {
+        return targetUserName;
+    }
+
+    public void setTargetUserName(String targetUserName) {
+        this.targetUserName = targetUserName;
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.util.Log;
 import com.mob.MobSDK;
 
 import cn.jpush.im.android.api.JMessageClient;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Application
@@ -37,6 +39,8 @@ public class FlyMessageApplication extends Application {
         JMessageClient.init(getApplicationContext(), true);
         initScreenSize();
         MobSDK.init(this);//短信验证码
+        //数据库初始化
+        initReleamDatabase();
     }
 
     /**
@@ -47,5 +51,10 @@ public class FlyMessageApplication extends Application {
         screenWidth = curMetrics.widthPixels;
         screenHeight = curMetrics.heightPixels;
         screenDensity = curMetrics.density;
+    }
+
+    private void initReleamDatabase(){
+        RealmConfiguration configuration = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(configuration);
     }
 }

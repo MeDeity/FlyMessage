@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.deity.flymessage.viewholder.ReceiverBottleViewHolder;
+import com.deity.flymessage.viewholder.SendBottleViewHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,17 +41,57 @@ public class MainActivity extends Activity {
         initViews();
     }
 
+    //动画设置
     private void initViews(){
         beach_shui.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_shake));
         beach_lang.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_shake));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        String userStr = "用户名:%s,appKey:%s,版本号:%s";
-//        UserInfo info = JMessageClient.getMyInfo();
-//        tv_user_info.setText(String.format(userStr,info.getUserName(),info.getAppKey(),JMessageClient.getSdkVersionString()));
+    //扔漂流瓶
+    private void actionSendBottleMsg(){
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        View sendBottleView = layoutInflater.inflate(R.layout.dialog_bottle_send,null);
+        final SendBottleViewHolder sendBottleViewHolder = new SendBottleViewHolder(sendBottleView);
+        final AlertDialog dialog  = new AlertDialog.Builder(MainActivity.this).setView(sendBottleView).create();
+        sendBottleViewHolder.getBtn_cancel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        sendBottleViewHolder.getBtn_send().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = sendBottleViewHolder.getEt_message().getText().toString().trim();
+                //TODO 发送消息
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
+    //扔漂流瓶
+    private void actionGetBottleMsg(){
+        LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+        View receiverBottleView = layoutInflater.inflate(R.layout.dialog_bottle_receiver,null);
+        final ReceiverBottleViewHolder receiverBottleViewHolder = new ReceiverBottleViewHolder(receiverBottleView);
+        final AlertDialog dialog  = new AlertDialog.Builder(MainActivity.this).setView(receiverBottleView).create();
+        receiverBottleViewHolder.getBtn_cancel().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        receiverBottleViewHolder.getBtn_response().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = receiverBottleViewHolder.getTv_message().getText().toString().trim();
+                //TODO 回复消息
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @SuppressWarnings("unused")
@@ -58,8 +102,8 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this,SettingActivity.class));
                 break;
             case R.id.send_nav_image:
-                new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_send)
-                        .show();
+//                new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_send).show();
+                actionSendBottleMsg();
                 break;
         }
 
@@ -69,9 +113,9 @@ public class MainActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.get_nav_image)
     public void getBottleMsg(View view){
-        new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_receiver)
-                .show();
+//        new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_receiver).show();
 //        bottle_getting.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up));
+        actionGetBottleMsg();
     }
 
 

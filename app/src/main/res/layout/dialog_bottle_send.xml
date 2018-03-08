@@ -7,7 +7,7 @@
     android:padding="10.0dip">
 
     <EditText
-        android:id="@+id/et_uname"
+        android:id="@+id/et_message"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10.0dip"
@@ -42,7 +42,7 @@
             android:textSize="16.0sp" />
 
         <Button
-            android:id="@+id/btn_ok"
+            android:id="@+id/btn_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5.0dip"

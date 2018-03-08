@@ -24,53 +24,28 @@ public class MessageInfo {
     private String msgId;
 
     //扩展
-//    private JMUserInfo jmUserInfo;
     private Message message;
     private String mediaFilePath;
     private String progress;
 
     public MessageInfo(){}
-    /**
-     * MessageInfo messageInfo = new MessageInfo();
-     messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
-     messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-     messageInfo.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-     messageInfos.add(messageInfo);
 
-     MessageInfo messageInfo1 = new MessageInfo();
-     messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
-     messageInfo1.setVoiceTime(3000);
-     messageInfo1.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-     messageInfo1.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-     messageInfo1.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-     messageInfos.add(messageInfo1);
-
-     MessageInfo messageInfo2 = new MessageInfo();
-     messageInfo2.setImageUrl("http://img4.imgtn.bdimg.com/it/u=1800788429,176707229&fm=21&gp=0.jpg");
-     messageInfo2.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-     messageInfo2.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-     messageInfos.add(messageInfo2);
-
-     MessageInfo messageInfo3 = new MessageInfo();
-     messageInfo3.setContent("[微笑][色][色][色]");
-     messageInfo3.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-     messageInfo3.setSendState(Constants.CHAT_ITEM_SEND_ERROR);
-     messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
-     messageInfos.add(messageInfo3);
-     */
     public MessageInfo(Message message){
         if (message.getDirect().equals(MessageDirect.receive)){
             this.type = Constants.CHAT_ITEM_TYPE_LEFT;
         }else {
             this.type = Constants.CHAT_ITEM_TYPE_RIGHT;
         }
-        if (ContentType.text.equals(message.getContentType())){
-            this.content = ((TextContent) message.getContent()).getText();
+        switch (message.getContentType()){
+            case text:
+                this.content = ((TextContent) message.getContent()).getText();
+                break;
+            case image:
+//                this.imageUrl = message.get
+                break;
         }
 
         this.message = message;
-        this.header = "http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg";
-//        this.jmUserInfo = new JMUserInfo(message.getFromUser());
         ContentType contentType = message.getContentType();
         if (contentType == ContentType.voice || contentType == ContentType.image
                 || contentType == ContentType.video || contentType == ContentType.file) {

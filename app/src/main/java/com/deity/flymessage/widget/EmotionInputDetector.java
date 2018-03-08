@@ -27,8 +27,7 @@ import com.deity.flymessage.utils.AudioRecoderUtils;
 import com.deity.flymessage.utils.PopupWindowFactory;
 import com.deity.flymessage.utils.Utils;
 
-import cn.jpush.im.android.eventbus.EventBus;
-
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 作者：Rance on 2016/12/13 15:19
@@ -189,9 +188,9 @@ public class EmotionInputDetector {
             public void onClick(View v) {
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.GONE);
-//                MessageInfo messageInfo = new MessageInfo();
-//                messageInfo.setContent(mEditText.getText().toString());
-//                EventBus.getDefault().post(messageInfo);
+                MessageInfo messageInfo = new MessageInfo();
+                messageInfo.setContent(mEditText.getText().toString());
+                EventBus.getDefault().post(messageInfo);
                 mEditText.setText("");
             }
         });

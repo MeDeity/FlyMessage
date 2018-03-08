@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.deity.flymessage.data.Params;
 import com.deity.flymessage.utils.FlyMessageUtils;
 import com.deity.flymessage.viewholder.PersonViewHolder;
 import com.github.clans.fab.FloatingActionButton;
@@ -47,7 +48,6 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
         setContentView(R.layout.activity_convertion);
         ButterKnife.bind(this);
         initRecycleView();
-//        obtainConversationList();
     }
 
     /**获取会话消息*/
@@ -56,7 +56,7 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
         if (conversationList != null) {
             for (Conversation convList : conversationList) {
                 List<UserInfo> userInfoList = new ArrayList<>();
-                if (convList.getType().toString().equals("single")) {
+                if (convList.getType().toString().equals(Params.SINGLE_CHAT)) {//单聊类型
                     UserInfo userInfo = (UserInfo) convList.getTargetInfo();
                     userInfoList.add(userInfo);
                     adapter.addAll(userInfoList);
@@ -131,7 +131,7 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
 
     @Override
     public void onLoadMore() {
-        //加载更多
+        //加载更多，一次性加载所有，不分页
         adapter.stopMore();
     }
 }

@@ -29,7 +29,7 @@
         android:padding="10.0dip">
 
         <TextView
-            android:id="@+id/chatcontent"
+            android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|left"
@@ -102,7 +102,7 @@
             android:textSize="16.0sp" />
 
         <Button
-            android:id="@+id/btn_ok"
+            android:id="@+id/btn_response"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5.0dip"

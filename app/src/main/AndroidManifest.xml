@@ -38,7 +38,7 @@
     <application
         android:name=".data.FlyMessageApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -132,11 +132,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".test.CreateTextMessage" />
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".ChatActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".ConvertionActivity"
             android:parentActivityName=".MainActivity" />

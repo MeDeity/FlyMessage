@@ -35,7 +35,7 @@ public class FlyMessageApplication extends Application {
         Log.i("IMDebugApplication", "init");
         JMessageClient.setDebugMode(true);
         JMessageClient.init(getApplicationContext(), true);
-
+        initScreenSize();
         MobSDK.init(this);//短信验证码
     }
 

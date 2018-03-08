@@ -22,6 +22,7 @@ import com.deity.flymessage.adapter.CommonFragmentPagerAdapter;
 import com.deity.flymessage.entity.MessageInfo;
 import com.deity.flymessage.fragment.ChatEmotionFragment;
 import com.deity.flymessage.fragment.ChatFunctionFragment;
+import com.deity.flymessage.utils.ChatUtils;
 import com.deity.flymessage.utils.Constants;
 import com.deity.flymessage.utils.GlobalOnItemClickManagerUtils;
 import com.deity.flymessage.utils.MediaManager;
@@ -34,17 +35,22 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.DownloadCompletionCallback;
+import cn.jpush.im.android.api.content.ImageContent;
+import cn.jpush.im.android.api.content.VoiceContent;
 import cn.jpush.im.android.api.enums.ConversationType;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
+import cn.jpush.im.api.BasicCallback;
 
 /**
  * 聊天界面
@@ -271,11 +277,18 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter.addAll(messageInfos);
     }
 
+    @SuppressWarnings("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
         messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+        ChatUtils.sendSingleMessage(mTargetId, messageInfo, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.i("ChatActivity:",s);
+            }
+        });
         messageInfos.add(messageInfo);
         chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
@@ -285,17 +298,17 @@ public class ChatActivity extends AppCompatActivity {
                 chatAdapter.notifyDataSetChanged();
             }
         }, 2000);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                MessageInfo message = new MessageInfo();
-                message.setContent("这是模拟消息回复");
-                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                message.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
-                messageInfos.add(message);
-                chatAdapter.add(message);
-                chatList.scrollToPosition(chatAdapter.getCount() - 1);
-            }
-        }, 3000);
+//        new Handler().postDelayed(new Runnable() {
+//            public void run() {
+//                MessageInfo message = new MessageInfo();
+//                message.setContent("这是模拟消息回复");
+//                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+//                message.setHeader("http://tupian.enterdesk.com/2014/mxy/11/2/1/12.jpg");
+//                messageInfos.add(message);
+//                chatAdapter.add(message);
+//                chatList.scrollToPosition(chatAdapter.getCount() - 1);
+//            }
+//        }, 3000);
     }
 
     @Override
@@ -312,6 +325,80 @@ public class ChatActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+
+    private void handleMessage(MessageEvent event){
+        Message msg = event.getMessage();
+        switch (msg.getContentType()) {
+            case voice://TODO 下载在哪里呢 其实sdk是会自动下载语音的.本方法是当sdk自动下载失败时可以手动调用进行下载而设计的.同理于缩略图下载
+//                final Intent intentVoice = new Intent(getApplicationContext(), ShowDownloadVoiceInfoActivity.class);
+                final VoiceContent voiceContent = (VoiceContent) msg.getContent();
+                final int duration = voiceContent.getDuration();
+                final String format = voiceContent.getFormat();
+                /**=================     下载语音文件    =================*/
+                voiceContent.downloadVoiceFile(msg, new DownloadCompletionCallback() {
+                    @Override
+                    public void onComplete(int i, String s, File file) {
+                        if (i == 0) {
+//                            message.setFilepath(file.getPath());
+//                            Toast.makeText(getApplicationContext(), "下载成功", Toast.LENGTH_SHORT).show();
+//                            intentVoice.putExtra(DOWNLOAD_INFO, "path = " + file.getPath() + "\n" + "duration = " + duration + "\n" + "format = " + format + "\n");
+//                            startActivity(intentVoice);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "downloadVoiceFile" + ", responseCode = " + i + " ; desc = " + s);
+                        }
+                    }
+                });
+                break;
+//            case eventNotification:
+//                String eventText = ((EventNotificationContent) msg.getContent()).getEventText();
+//                Intent intentNotification = new Intent(getApplicationContext(), ShowGroupNotificationActivity.class);
+//                intentNotification.putExtra(CreateGroupTextMsgActivity.GROUP_NOTIFICATION, eventText);
+//
+//                List<String> userNames = ((EventNotificationContent) msg.getContent()).getUserNames();
+//                if (null != userNames) {
+//                    intentNotification.putExtra(CreateGroupTextMsgActivity.GROUP_NOTIFICATION_LIST, userNames.toString());
+//                }
+//                startActivity(intentNotification);
+//                break;
+            case image:
+//                final Intent intentImage = new Intent(getApplicationContext(), ShowDownloadPathActivity.class);
+                final ImageContent imageContent = (ImageContent) msg.getContent();
+                //其实sdk是会自动下载缩略图的.本方法是当sdk自动下载失败时可以手动调用进行下载而设计的.同理于语音下载
+                /**=================     下载图片信息中的缩略图    =================*/
+                imageContent.downloadThumbnailImage(msg, new DownloadCompletionCallback() {
+                    @Override
+                    public void onComplete(int i, String s, File file) {
+                        if (i == 0) {
+//                            Toast.makeText(getApplicationContext(), "下载缩略图成功", Toast.LENGTH_SHORT).show();
+//                            intentImage.putExtra(DOWNLOAD_THUMBNAIL_IMAGE, file.getPath());
+                        } else {
+                            Toast.makeText(getApplicationContext(), "下载原图失败", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "downloadThumbnailImage" + ", responseCode = " + i + " ; desc = " + s);
+                        }
+                    }
+                });
+
+                /**=================     下载图片消息中的原图    =================*/
+                imageContent.downloadOriginImage(msg, new DownloadCompletionCallback() {
+                    @Override
+                    public void onComplete(int i, String s, File file) {
+                        if (i == 0) {
+//                            Toast.makeText(getApplicationContext(), "下载原图成功", Toast.LENGTH_SHORT).show();
+//                            intentImage.putExtra(IS_UPLOAD, imageContent.isFileUploaded() + "");
+//                            intentImage.putExtra(DOWNLOAD_ORIGIN_IMAGE, file.getPath());
+//                            startActivity(intentImage);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "下载原图失败", Toast.LENGTH_SHORT).show();
+                            Log.i(TAG, "downloadOriginImage" + ", responseCode = " + i + " ; desc = " + s);
+                        }
+                    }
+                });
+                break;
+            default:
+                break;
+        }
+    }
 
     /**
      * 接收消息类事件 非UI线程上执行

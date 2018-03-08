@@ -2,10 +2,11 @@ package com.deity.flymessage.utils;
 
 import android.media.MediaPlayer;
 
+import com.deity.flymessage.entity.MessageInfo;
+
 import java.io.File;
 
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.ProgressUpdateCallback;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
@@ -30,7 +31,7 @@ public class ChatUtils {
     }
 
     //发送语音消息
-    public static void sendSingleVoiceMessage(String userName,String mVoicePath,BasicCallback basicCallback,ProgressUpdateCallback progressUpdateCallback){
+    public static void sendSingleVoiceMessage(String userName,String mVoicePath,BasicCallback basicCallback){//ProgressUpdateCallback progressUpdateCallback
         try {
             File fileMp3 = new File(mVoicePath);
             MediaPlayer player = new MediaPlayer();
@@ -39,7 +40,7 @@ public class ChatUtils {
             int duration = player.getDuration();
             Message voiceMessage = JMessageClient.createSingleVoiceMessage(userName, fileMp3, duration);
             voiceMessage.setOnSendCompleteCallback(basicCallback);
-            voiceMessage.setOnContentUploadProgressCallback(progressUpdateCallback);//voice上传进度
+//            voiceMessage.setOnContentUploadProgressCallback(progressUpdateCallback);//voice上传进度
             JMessageClient.sendMessage(voiceMessage);
 //            boolean callbackExists = voiceMessage.isContentUploadProgressCallbackExists();
 //            boolean exists = voiceMessage.isSendCompleteCallbackExists();
@@ -87,6 +88,18 @@ public class ChatUtils {
 //        });
         //发送消息
         JMessageClient.sendMessage(message, initMessageOptions());
+    }
+
+    public static void sendSingleMessage(String userName, MessageInfo data, BasicCallback basicCallback){
+        if (null!=data){
+            if (data.getContent() != null) {
+                sendSingleTextMessage(userName,data.getContent(),basicCallback);
+            } else if (data.getImageUrl() != null) {
+                sendSingleImageMessage(userName,data.getImageUrl(),basicCallback);
+            } else if (data.getFilepath() != null) {
+                sendSingleVoiceMessage(userName,data.getFilepath(),basicCallback);
+            }
+        }
     }
 
 

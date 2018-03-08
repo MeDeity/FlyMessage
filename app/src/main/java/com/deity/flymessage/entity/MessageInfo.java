@@ -30,18 +30,23 @@ public class MessageInfo {
 
     public MessageInfo(){}
 
-    public MessageInfo(Message message){
+    public MessageInfo(Message message,int code,String imageUrl,String filepath,long voiceTime){
         if (message.getDirect().equals(MessageDirect.receive)){
             this.type = Constants.CHAT_ITEM_TYPE_LEFT;
         }else {
             this.type = Constants.CHAT_ITEM_TYPE_RIGHT;
         }
+        this.sendState = code;
         switch (message.getContentType()){
             case text:
                 this.content = ((TextContent) message.getContent()).getText();
                 break;
             case image:
-//                this.imageUrl = message.get
+                this.imageUrl = imageUrl;
+                break;
+            case voice:
+                this.filepath = filepath;
+                this.voiceTime = voiceTime;
                 break;
         }
 

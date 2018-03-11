@@ -1,10 +1,14 @@
 package com.deity.flymessage.data;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.mob.MobSDK;
+
+import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import io.realm.Realm;
@@ -32,6 +36,9 @@ public class FlyMessageApplication extends Application {
 
     @Override
     public void onCreate() {
+        if (!getCurProcessName(getApplicationContext()).equals(this.getPackageName())){//因此存在守护线程的原因导致Applcation执行多次
+            return;
+        }
         super.onCreate();
 
         Log.i("IMDebugApplication", "init");
@@ -41,6 +48,27 @@ public class FlyMessageApplication extends Application {
         MobSDK.init(this);//短信验证码
         //数据库初始化
         initReleamDatabase();
+    }
+
+    /**
+     * 只有当前的进程才可以执行OnCreate方法
+     * @param context
+     * @return
+     */
+    private String getCurProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return "";
+        }
+        for (ActivityManager.RunningAppProcessInfo proInfo : runningApps) {
+            if (proInfo.pid == android.os.Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName;
+                }
+            }
+        }
+        return "";
     }
 
     /**

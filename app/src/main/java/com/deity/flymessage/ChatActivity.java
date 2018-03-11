@@ -3,7 +3,6 @@ package com.deity.flymessage;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -253,7 +252,7 @@ public class ChatActivity extends AppCompatActivity {
     public void MessageEventBus(final MessageInfo messageInfo) {
         messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
-        messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
+        messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
         ChatUtils.sendSingleMessage(mTargetId, messageInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
@@ -264,12 +263,6 @@ public class ChatActivity extends AppCompatActivity {
         messageInfos.add(messageInfo);
         chatAdapter.add(messageInfo);
         chatList.scrollToPosition(chatAdapter.getCount() - 1);
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                messageInfo.setSendState(Constants.CHAT_ITEM_SEND_SUCCESS);
-                chatAdapter.notifyDataSetChanged();
-            }
-        }, 2000);
     }
 
     @Override
@@ -284,6 +277,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().removeStickyEvent(this);
         EventBus.getDefault().unregister(this);
+        Log.i(TAG,"ChatActivity onDestroy:"+ChatActivity.this.hashCode());
     }
 
     private void receiveMessage(final Message msg, final int code, final String imageUrl, final String mFilePath, final long voiceTime){
@@ -295,6 +289,7 @@ public class ChatActivity extends AppCompatActivity {
                 if (targetId.equals(mTargetId)) {//判断消息是否在当前会话中
                     MessageInfo message = new MessageInfo(msg,code,imageUrl, mFilePath, voiceTime);
                     MessageDaoImpl.getInstance().saveNewMessage(message);
+                    Log.i(TAG,"ChatActivity hashCode:"+ChatActivity.this.hashCode());
                     messageInfos.add(message);
                     chatAdapter.add(message);
                     chatList.scrollToPosition(chatAdapter.getCount() - 1);

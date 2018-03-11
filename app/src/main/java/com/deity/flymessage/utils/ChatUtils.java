@@ -76,16 +76,6 @@ public class ChatUtils {
         //创建message实体，设置消息发送回调。
         Message message = mConversation.createSendMessage(textContent);
         message.setOnSendCompleteCallback(basicCallback);
-//        message.setOnSendCompleteCallback(new BasicCallback() {
-//            @Override
-//            public void gotResult(int i, String s) {
-//                if (i == 0) {
-//                    //"发送成功"
-//                } else {
-//                    //"发送失败"
-//                }
-//            }
-//        });
         //发送消息
         JMessageClient.sendMessage(message, initMessageOptions());
     }

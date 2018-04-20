@@ -62,16 +62,20 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
 
     /**获取会话消息*/
     private void obtainConversationList(){
-        List<Conversation> conversationList = JMessageClient.getConversationList();
-        if (conversationList != null) {
-            for (Conversation convList : conversationList) {
-                List<UserInfo> userInfoList = new ArrayList<>();
-                if (convList.getType().toString().equals(Params.SINGLE_CHAT)) {//单聊类型
-                    UserInfo userInfo = (UserInfo) convList.getTargetInfo();
-                    userInfoList.add(userInfo);
-                    adapter.addAll(userInfoList);
+        try {
+            List<Conversation> conversationList = JMessageClient.getConversationList();
+            if (conversationList != null) {
+                for (Conversation convList : conversationList) {
+                    List<UserInfo> userInfoList = new ArrayList<>();
+                    if (convList.getType().toString().equals(Params.SINGLE_CHAT)) {//单聊类型
+                        UserInfo userInfo = (UserInfo) convList.getTargetInfo();
+                        userInfoList.add(userInfo);
+                        adapter.addAll(userInfoList);
+                    }
                 }
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

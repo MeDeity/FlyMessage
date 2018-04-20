@@ -1,28 +1,33 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/custom_toolbar"/>
+    <include layout="@layout/custom_toolbar" />
 
-    <com.jude.easyrecyclerview.EasyRecyclerView
-        android:id="@+id/recyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_empty="@layout/view_empty"
-        app:layout_progress="@layout/view_progress"
-        app:scrollbarStyle="insideOverlay" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_top"
-        app:fab_colorNormal="?colorAccent"
-        app:fab_colorPressed="?colorAccent"
-        app:fab_size="normal" />
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_empty="@layout/view_empty"
+            app:layout_progress="@layout/view_progress"
+            app:scrollbarStyle="insideOverlay" />
 
-</FrameLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_top"
+            app:fab_colorNormal="?colorAccent"
+            app:fab_colorPressed="?colorAccent"
+            app:fab_size="normal" />
+    </FrameLayout>
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -76,6 +77,8 @@ public class ChatActivity extends AppCompatActivity {
     NoScrollViewPager viewpager;
     @BindView(R.id.emotion_layout)
     RelativeLayout emotionLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private EmotionInputDetector mDetector;
     private ArrayList<Fragment> fragments;
@@ -109,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initWidget();
-
+        initToolbar();
         JMessageClient.registerEventReceiver(this);
         mTargetId = getIntent().getStringExtra("targetId");
         mMyInfo = JMessageClient.getMyInfo();
@@ -120,6 +123,11 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         LoadData();
+    }
+
+    private void initToolbar(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(false);
     }
 
 

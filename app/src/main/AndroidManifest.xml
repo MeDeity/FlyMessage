@@ -124,7 +124,8 @@
             android:name="JPUSH_APPKEY"
             android:value="ebb6c563b569ff11f8829b60" />
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AppNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -147,7 +148,7 @@
         <activity
             android:name=".ConvertionActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".MainActivity" />
+            android:theme="@style/AppNoActionBar"/>
         <activity
             android:name=".SettingActivity"
             android:launchMode="singleTask"

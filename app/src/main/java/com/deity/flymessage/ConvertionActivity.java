@@ -4,16 +4,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.deity.flymessage.data.Params;
 import com.deity.flymessage.utils.FlyMessageUtils;
 import com.deity.flymessage.viewholder.PersonViewHolder;
-import com.github.clans.fab.FloatingActionButton;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
@@ -40,6 +41,9 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
     @BindView(R.id.top)
     protected FloatingActionButton top;
 
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
+
     private RecyclerArrayAdapter<UserInfo> adapter;
 
     @Override
@@ -48,6 +52,12 @@ public class ConvertionActivity extends AppCompatActivity implements RecyclerArr
         setContentView(R.layout.activity_convertion);
         ButterKnife.bind(this);
         initRecycleView();
+        initToolbar();
+    }
+
+    private void initToolbar(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(false);
     }
 
     /**获取会话消息*/

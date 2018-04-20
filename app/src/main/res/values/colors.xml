@@ -22,4 +22,9 @@
 
     <!-- 描边颜色 -->
     <color name="border_color">#ccc</color>
+
+    <color name="loginBg">#333642</color>
+    <color name="loginUserBg">#474a56</color>
+    <color name="loginEdt">#7e8191</color>
+    <color name="colorBlue">#276EBC</color>
 </resources>

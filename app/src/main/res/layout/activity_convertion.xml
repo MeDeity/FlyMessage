@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/custom_toolbar"/>
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/recyclerView"
@@ -13,7 +14,7 @@
         app:layout_progress="@layout/view_progress"
         app:scrollbarStyle="insideOverlay" />
 
-    <com.github.clans.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

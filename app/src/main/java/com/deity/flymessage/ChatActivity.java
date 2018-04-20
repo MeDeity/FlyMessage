@@ -307,7 +307,7 @@ public class ChatActivity extends AppCompatActivity {
                 final VoiceContent voiceContent = (VoiceContent) eventMessage.getContent();
                 final int duration = voiceContent.getDuration();
                 final String format = voiceContent.getFormat();
-                /**=================     下载语音文件    =================*/
+                //=================     下载语音文件    =================
                 voiceContent.downloadVoiceFile(eventMessage, new DownloadCompletionCallback() {
                     @Override
                     public void onComplete(int i, String s, File file) {
@@ -317,7 +317,7 @@ public class ChatActivity extends AppCompatActivity {
                 break;
             case image:
                 final ImageContent imageContent = (ImageContent) eventMessage.getContent();
-                /**=================     下载图片消息中的原图    =================*/
+                //=================     下载图片消息中的原图    =================
                 imageContent.downloadOriginImage(eventMessage, new DownloadCompletionCallback() {
                     @Override
                     public void onComplete(int i, String s, File file) {

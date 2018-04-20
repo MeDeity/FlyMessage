@@ -1,38 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
 
-    <EditText
-        android:id="@+id/ed_login_username"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="输入登录账号" />
+        android:text="飘信"
+        android:textColor="@android:color/white"
+        app:layout_marginTopPercent="14.3%h"
+        app:layout_textSizePercent="7.3%w" />
 
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/activity_login_user_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/login_edt_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_heightPercent="7.4%h"
+        app:layout_marginTopPercent="14.3%h"
+        app:layout_widthPercent="73.6%w">
 
-    <EditText
-        android:id="@+id/ed_login_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="输入登录密码" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/login_user"
+            app:layout_heightPercent="45%h"
+            app:layout_marginLeftPercent="4.5%w"
+            app:layout_widthPercent="45%h" />
+
+        <EditText
+            android:id="@+id/ed_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请输入账号"
+            android:singleLine="true"
+            android:textColor="@color/loginEdt"
+            app:layout_marginLeftPercent="4.5%w"
+            app:layout_textSizePercent="5.7%w" />
+
+    </com.zhy.android.percent.support.PercentLinearLayout>
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/activity_login_password_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/login_edt_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_heightPercent="7.4%h"
+        app:layout_marginTopPercent="1%h"
+        app:layout_widthPercent="73.6%w">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/login_password"
+            app:layout_heightPercent="45%h"
+            app:layout_marginLeftPercent="4.5%w"
+            app:layout_widthPercent="45%h" />
+
+        <EditText
+            android:id="@+id/ed_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:singleLine="true"
+            android:textColor="@color/loginEdt"
+            app:layout_marginLeftPercent="4.5%w"
+            app:layout_textSizePercent="5.7%w" />
+
+    </com.zhy.android.percent.support.PercentLinearLayout>
 
     <Button
         android:id="@+id/bt_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="登录" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btn_bule_bg"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@android:color/white"
+        app:layout_heightPercent="7.4%h"
+        app:layout_marginTopPercent="3%h"
+        app:layout_textSizePercent="4.5%w"
+        app:layout_widthPercent="73.6%w" />
 
     <Button
         android:id="@+id/bt_goto_regester"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="注册" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btn_bule_bg"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="@android:color/white"
+        app:layout_heightPercent="7.4%h"
+        app:layout_marginTopPercent="3%h"
+        app:layout_textSizePercent="4.5%w"
+        app:layout_widthPercent="73.6%w" />
 
-    <CheckBox
-        android:id="@+id/cb_is_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="是否设置测试环境" />
-</LinearLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>

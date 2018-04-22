@@ -142,7 +142,7 @@
             android:name=".ChatActivity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.Chat"/>
         <activity
             android:name=".ConvertionActivity"
             android:launchMode="singleTask"

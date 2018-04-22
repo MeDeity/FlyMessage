@@ -284,7 +284,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         //注销消息接收
         JMessageClient.unRegisterEventReceiver(this);//TODO 可以提到BaseActivity中
-        EventBus.getDefault().removeStickyEvent(this);
+        EventBus.getDefault().unregister(this);
         Log.i(TAG,"ChatActivity onDestroy:"+ChatActivity.this.hashCode());
     }
 

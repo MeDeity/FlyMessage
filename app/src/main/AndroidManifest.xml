@@ -140,10 +140,8 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".ChatActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppNoActionBar"/>
         <activity
             android:name=".ConvertionActivity"

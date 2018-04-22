@@ -77,9 +77,9 @@ public class ChatActivity extends AppCompatActivity {
     NoScrollViewPager viewpager;
     @BindView(R.id.emotion_layout)
     RelativeLayout emotionLayout;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
+    private static final String TAG = ChatActivity.class.getSimpleName();
     private EmotionInputDetector mDetector;
     private ArrayList<Fragment> fragments;
     private ChatEmotionFragment chatEmotionFragment;
@@ -101,7 +101,6 @@ public class ChatActivity extends AppCompatActivity {
     private String mTargetId;
     private UserInfo mMyInfo;
     private Conversation mConv;//会话
-    private final static String TAG = "ChatActivity";
     private List<Message> mMsgList = new ArrayList<>();
 
 
@@ -112,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         initWidget();
-        initToolbar();
+//        initToolbar();
         JMessageClient.registerEventReceiver(this);
         mTargetId = getIntent().getStringExtra("targetId");
         mMyInfo = JMessageClient.getMyInfo();
@@ -121,14 +120,14 @@ public class ChatActivity extends AppCompatActivity {
             Log.i(TAG, "create new conversation");
             mConv = Conversation.createSingleConversation(mTargetId);
         }
-
+        Log.i(TAG,"create");
         LoadData();
     }
 
-    private void initToolbar(){
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setHomeButtonEnabled(false);
-    }
+//    private void initToolbar(){
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setHomeButtonEnabled(false);
+//    }
 
 
 
@@ -283,8 +282,9 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //注销消息接收
+        JMessageClient.unRegisterEventReceiver(this);//TODO 可以提到BaseActivity中
         EventBus.getDefault().removeStickyEvent(this);
-        EventBus.getDefault().unregister(this);
         Log.i(TAG,"ChatActivity onDestroy:"+ChatActivity.this.hashCode());
     }
 

@@ -140,8 +140,9 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".ChatActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppNoActionBar"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".ConvertionActivity"
             android:launchMode="singleTask"

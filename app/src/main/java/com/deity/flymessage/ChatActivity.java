@@ -252,7 +252,7 @@ public class ChatActivity extends AppCompatActivity {
     private void LoadData() {
         loadHistory();
         chatAdapter.addAll(messageInfos);
-        int position = chatAdapter.getCount()>0?0:(chatAdapter.getCount() - 1);
+        int position = chatAdapter.getCount()>0?(chatAdapter.getCount() - 1):0;
         chatList.scrollToPosition(position);
     }
 

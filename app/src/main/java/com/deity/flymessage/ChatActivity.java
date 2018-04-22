@@ -252,6 +252,8 @@ public class ChatActivity extends AppCompatActivity {
     private void LoadData() {
         loadHistory();
         chatAdapter.addAll(messageInfos);
+        int position = chatAdapter.getCount()>0?0:(chatAdapter.getCount() - 1);
+        chatList.scrollToPosition(position);
     }
 
     @SuppressWarnings("unused")

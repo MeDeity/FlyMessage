@@ -4,12 +4,13 @@
     android:fillAfter="true">
     <translate
         android:fromYDelta="0%p"
-        android:toYDelta="-50%p"/>
+        android:toYDelta="-50%p" />
 
-    <!--<rotate-->
-        <!--android:interpolator="@android:anim/linear_interpolator"-->
-        <!--android:pivotX="50%"-->
-        <!--android:pivotY="50%"-->
-        <!--android:fromDegrees="0"-->
-        <!--android:toDegrees="359"/>-->
+    <rotate
+        android:repeatCount="0"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:fromDegrees="0"
+        android:toDegrees="359" />
 </set>

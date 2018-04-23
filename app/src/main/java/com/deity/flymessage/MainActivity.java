@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.deity.flymessage.viewholder.ReceiverBottleViewHolder;
@@ -32,6 +34,14 @@ public class MainActivity extends Activity {
 
     @BindView(R.id.bottle_sending)
     public ImageView bottle_sending;
+
+
+    @BindView(R.id.item_bottle_msg)
+    protected View item_bottle_msg;
+    @BindView(R.id.get_nav_image)
+    protected View get_nav_image;
+    @BindView(R.id.send_nav_image)
+    protected View send_nav_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +75,43 @@ public class MainActivity extends Activity {
                 String message = sendBottleViewHolder.getEt_message().getText().toString().trim();
                 //TODO 发送消息
                 dialog.dismiss();
+                animationListener(bottle_sending);
             }
         });
         dialog.show();
     }
 
+    private void btnImageViewCanClick(boolean isBtnImageViewCanClick){
+        item_bottle_msg.setClickable(isBtnImageViewCanClick);
+        get_nav_image.setClickable(isBtnImageViewCanClick);
+        send_nav_image.setClickable(isBtnImageViewCanClick);
+    }
 
-    //扔漂流瓶
+    private void animationListener(final View viewAnimation){
+        Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                btnImageViewCanClick(false);
+                viewAnimation.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnImageViewCanClick(true);
+                viewAnimation.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        viewAnimation.startAnimation(animation);
+    }
+
+
+    //捞漂流瓶
     private void actionGetBottleMsg(){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
         View receiverBottleView = layoutInflater.inflate(R.layout.dialog_bottle_receiver,null);
@@ -89,6 +129,7 @@ public class MainActivity extends Activity {
                 String message = receiverBottleViewHolder.getTv_message().getText().toString().trim();
                 //TODO 回复消息
                 dialog.dismiss();
+                animationListener(bottle_getting);
             }
         });
         dialog.show();
@@ -102,19 +143,14 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this,SettingActivity.class));
                 break;
             case R.id.send_nav_image:
-//                new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_send).show();
                 actionSendBottleMsg();
                 break;
         }
-
-//        bottle_sending.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up));
     }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.get_nav_image)
     public void getBottleMsg(View view){
-//        new AlertDialog.Builder(MainActivity.this).setView(R.layout.dialog_bottle_receiver).show();
-//        bottle_getting.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up));
         actionGetBottleMsg();
     }
 
@@ -123,6 +159,5 @@ public class MainActivity extends Activity {
     @OnClick(R.id.item_bottle_msg)
     public void getBottle(View view){
         startActivity(new Intent(MainActivity.this,ConvertionActivity.class));
-//        startActivity(new Intent(MainActivity.this,ChatActivity.class));
     }
 }

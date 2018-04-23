@@ -111,6 +111,31 @@ public class MainActivity extends Activity {
     }
 
 
+    private void animationGetBottleListener(final View viewAnimation){
+        Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.anim_move_up);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                btnImageViewCanClick(false);
+                viewAnimation.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                btnImageViewCanClick(true);
+                viewAnimation.setVisibility(View.GONE);
+                actionGetBottleMsg();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        viewAnimation.startAnimation(animation);
+    }
+
+
     //捞漂流瓶
     private void actionGetBottleMsg(){
         LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
@@ -129,7 +154,6 @@ public class MainActivity extends Activity {
                 String message = receiverBottleViewHolder.getTv_message().getText().toString().trim();
                 //TODO 回复消息
                 dialog.dismiss();
-                animationListener(bottle_getting);
             }
         });
         dialog.show();
@@ -151,7 +175,8 @@ public class MainActivity extends Activity {
     @SuppressWarnings("unused")
     @OnClick(R.id.get_nav_image)
     public void getBottleMsg(View view){
-        actionGetBottleMsg();
+//        actionGetBottleMsg();
+        animationGetBottleListener(bottle_getting);
     }
 
 

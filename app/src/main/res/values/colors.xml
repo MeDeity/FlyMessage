@@ -27,4 +27,7 @@
     <color name="loginUserBg">#474a56</color>
     <color name="loginEdt">#7e8191</color>
     <color name="colorBlue">#276EBC</color>
+
+    <!-- 标题颜色 -->
+    <color name="title_color">#5b4e61</color>
 </resources>

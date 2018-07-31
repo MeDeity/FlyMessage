@@ -1,109 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:background="@mipmap/icon_login_bg"
+    android:gravity="center_horizontal">
+
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/iv_input"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_centerInParent="true"
+        android:background="@mipmap/icon_input_box">
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/activity_login_user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_user"
+                app:layout_marginLeftPercent="4.5%w" />
+
+            <TextView
+                android:id="@+id/tv_line_phone"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/iv_phone"
+                android:background="#d1d1d1" />
+
+            <EditText
+                android:id="@+id/ed_login_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/tv_line_phone"
+                android:background="@null"
+                android:hint="手机号"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textColorHint="#d1d1d1"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:background="@mipmap/icon_phone_null"/>
+
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/activity_login_password_layout"
+            android:layout_below="@id/activity_login_user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/iv_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_password"
+                app:layout_marginLeftPercent="4.5%w" />
+
+            <TextView
+                android:id="@+id/tv_line_password"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/iv_password"
+                android:background="#d1d1d1" />
+
+            <EditText
+                android:id="@+id/ed_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/tv_line_password"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:singleLine="true"
+                app:layout_marginLeftPercent="4.5%w"
+                android:textColor="@color/white"
+                android:textColorHint="#d1d1d1"
+                android:textSize="15sp" />
+
+
+            <ImageView
+                android:id="@+id/iv_eyes"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/icon_login_eyes_un"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp" />
+
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_input"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:background="@mipmap/icon_login_iv" />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/iv_input"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/btn_select_bg"
+        android:text="登录"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/btn_login"
+        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:text="忘记密码？"
+        android:textColor="#d1d1d1"
+        android:textSize="13sp" />
 
 
     <TextView
+        android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="飘信"
-        android:textColor="@android:color/white"
-        app:layout_marginTopPercent="14.3%h"
-        app:layout_textSizePercent="7.3%w" />
+        android:textSize="13sp"
+        android:text="没有账号？立即注册"
+        android:textColor="#d1d1d1"
+        android:layout_below="@id/btn_login"
+        android:layout_marginTop="40dp"
+        android:padding="10dp"
+        android:layout_centerHorizontal="true"/>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/activity_login_user_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/login_edt_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_heightPercent="7.4%h"
-        app:layout_marginTopPercent="14.3%h"
-        app:layout_widthPercent="73.6%w">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/login_user"
-            app:layout_heightPercent="45%h"
-            app:layout_marginLeftPercent="4.5%w"
-            app:layout_widthPercent="45%h" />
-
-        <EditText
-            android:id="@+id/ed_login_username"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="请输入账号"
-            android:singleLine="true"
-            android:textColor="@color/loginEdt"
-            app:layout_marginLeftPercent="4.5%w"
-            app:layout_textSizePercent="5.7%w" />
-
-    </com.zhy.android.percent.support.PercentLinearLayout>
-
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/activity_login_password_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/login_edt_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_heightPercent="7.4%h"
-        app:layout_marginTopPercent="1%h"
-        app:layout_widthPercent="73.6%w">
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/login_password"
-            app:layout_heightPercent="45%h"
-            app:layout_marginLeftPercent="4.5%w"
-            app:layout_widthPercent="45%h" />
-
-        <EditText
-            android:id="@+id/ed_login_password"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="请输入密码"
-            android:singleLine="true"
-            android:textColor="@color/loginEdt"
-            app:layout_marginLeftPercent="4.5%w"
-            app:layout_textSizePercent="5.7%w" />
-
-    </com.zhy.android.percent.support.PercentLinearLayout>
-
-    <Button
-        android:id="@+id/bt_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/btn_bule_bg"
-        android:gravity="center"
-        android:text="登录"
-        android:textColor="@android:color/white"
-        app:layout_heightPercent="7.4%h"
-        app:layout_marginTopPercent="3%h"
-        app:layout_textSizePercent="4.5%w"
-        app:layout_widthPercent="73.6%w" />
-
-    <Button
-        android:id="@+id/bt_goto_regester"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/btn_bule_bg"
-        android:gravity="center"
-        android:text="注册"
-        android:textColor="@android:color/white"
-        app:layout_heightPercent="7.4%h"
-        app:layout_marginTopPercent="3%h"
-        app:layout_textSizePercent="4.5%w"
-        app:layout_widthPercent="73.6%w" />
-
-</com.zhy.android.percent.support.PercentLinearLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

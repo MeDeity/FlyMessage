@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -41,10 +42,10 @@ public class LoginActivity extends AppCompatActivity implements Handler.Callback
     public EditText mEd_userName;
     @BindView(R.id.ed_login_password)
     public EditText mEd_password;
-    @BindView(R.id.bt_login)
+    @BindView(R.id.btn_login)
     public Button mBt_login;
-    @BindView(R.id.bt_goto_regester)
-    public Button mBt_gotoRegister;
+    @BindView(R.id.tv_register)
+    public TextView tv_register;
 
     private boolean ready;
 
@@ -119,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements Handler.Callback
             finish();
         }
         /**=================     调用注册接口    =================*/
-        mBt_gotoRegister.setOnClickListener(new View.OnClickListener() {
+        tv_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent();
